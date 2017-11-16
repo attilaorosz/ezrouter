@@ -1,0 +1,19 @@
+{
+  "name": "attilaorosz/ez-router",
+  "description": "EzPz PHP router",
+  "keywords": ["routing", "router"],
+  "authors": [
+    {
+      "name": "Attila Orosz",
+      "email": "atttila.orosz@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "EzRouter\\": "src"
+    }
+  }
+}

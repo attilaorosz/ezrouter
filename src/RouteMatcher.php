@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Attila
- * Date: 2017. 11. 16.
- * Time: 20:18
- */
 
 namespace EzRouter;
 

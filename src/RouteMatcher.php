@@ -18,9 +18,8 @@ class RouteMatcher
      * @param string $method
      * @param string $uri
      * @return Route|null
-     * @internal param ServerRequestInterface $request
      */
-    public function matchByRequest($method, $uri) : Route
+    public function matchByRequest($method, $uri): ?Route
     {
         $segment_count = substr_count('/', $uri);
 
@@ -52,15 +51,16 @@ class RouteMatcher
     }
 
     /**
-     * Find matching route to name
+     * Find matching route to param
      *
-     * @param string $name
-     * @return null|Route
+     * @param string $param
+     * @param string $val
+     * @return Route|null
      */
-    public function matchByName(string $name): Route
+    public function matchByParam(string $param, string $val): ?Route
     {
         foreach ($this->routes->getRoutes() as $route) {
-            if ($route->name !== "" && $route->name === $name) {
+            if (property_exists($route, $param) !== "" && $route->{$param} === $val) {
                 return $route;
             }
         }
@@ -70,26 +70,27 @@ class RouteMatcher
     }
 
     /**
-     * @param $name
-     * @param array $params
+     * @param $param
+     * @param $val
+     * @param array $urlParams
      * @return string
      * @throws \Exception
      */
-    public function buildUrlByName($name, array $params = array()) : string
+    public function buildUrlByParam($param, $val, array $urlParams = array()): string
     {
         /**
          * @var Route
          */
-        $route = $this->matchByName($name);
+        $route = $this->matchByParam($param, $val);
 
         if ($route === null) {
-            throw new \Exception("Route " . $name . " not found");
+            throw new \Exception("Route with parameter (" . $param . " = " . $val . ") not found");
         }
 
-        if (count($params) > 0) {
+        if (count($urlParams) > 0) {
 
-            $url = preg_replace_callback('/([{][a-zA-Z0-9]+[}])/', function () use (&$params) {
-                return array_shift($params);
+            $url = preg_replace_callback('/([{][a-zA-Z0-9]+[}])/', function () use (&$urlParams) {
+                return array_shift($urlParams);
             }, $route->uri);
         } else {
             $url = $route->uri;

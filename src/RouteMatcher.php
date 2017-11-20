@@ -60,7 +60,7 @@ class RouteMatcher
     public function matchByParam(string $param, string $val): ?Route
     {
         foreach ($this->routes->getRoutes() as $route) {
-            if (property_exists($route, $param) !== "" && $route->{$param} === $val) {
+            if (property_exists($route, $param) && $route->{$param} === $val) {
                 return $route;
             }
         }

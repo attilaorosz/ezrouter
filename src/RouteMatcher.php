@@ -37,7 +37,7 @@ class RouteMatcher
                     preg_match_all('/[{][a-zA-Z0-9_-]+[}]/', $route->uri, $keys);
 
                     for ($i = 1, $iMax = count($matches); $i < $iMax; $i++) {
-                        $extras[substr($keys[0][$i - 1], 1, -1)] = $matches[$i][0];
+                        $params[substr($keys[0][$i - 1], 1, -1)] = $matches[$i][0];
                     }
 
                     $route->params = $params;
